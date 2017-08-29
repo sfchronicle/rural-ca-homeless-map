@@ -16,14 +16,48 @@
 
   <%= !json.project.embedded ? "<body>" : "<body is='responsive-body'>" %>
 
-    <%= t.include("partials/_nav.html") %>
+    <div class="outer">
 
+      <div class="hed">Are the homeless moving to rural California?</div>
+      <div class="chatter">After years of struggling with growing homelessness, rural counties in California are now facing the challenge of growing homeless populations. See the percent increase in homeless populations between 2015 and 2017 below.
+        <div class="desktop-instructions">Hover over each county for more detail on its population changes.</div>
+        <div class="mobile-instructions">Click on each county for more detail on its population changes.</div>
+      </div>
 
-    <div class="container">
-      <p>Content goes here...</p>
+      <div class="legend-container">
+        <div class="swath-text left">Decreasing population</div>
+        <div class="swath blue-swath0"></div>
+        <div class="swath blue-swath1"></div>
+        <div class="swath blue-swath2"></div>
+        <div class="swath blue-swath3"></div>
+        <div class="swath blue-swath4"></div>
+        <div class="swath white-swath"></div>
+        <div class="swath red-swath4"></div>
+        <div class="swath red-swath3"></div>
+        <div class="swath red-swath2"></div>
+        <div class="swath red-swath1"></div>
+        <div class="swath red-swath0"></div>
+        <div class="swath-text right">Increasing population</div>
+      </div>
+
+      <div class="button-container">
+        <div class="button active" id="all">All homeless</div>
+        <div class="button" id="chronic">Chronic homeless</div>
+      </div>
+
+      <div id="county-map" class="padding"></div>
+
+      <div class="credit">
+        <div class="entry">Emma O'Neill  &bull; <a href="mailto:eoneill@sfchronicle.com">eoneill@sfchronicle.com</a>   &bull; <a href = "https://twitter.com/emmaruthoneill" target="_blank">@emmaruthoneill</a></div>
+        <div class="entry">Clint Wirtanen  &bull; <a href="mailto:cwirtanen@sfchronicle.com">cwirtanen@sfchronicle.com</a>   &bull; <a href = "https://twitter.com/ClintWirtanen" target="_blank">@ClintWirtanen</a></div>
+      </div>
+      <div class="source">Source: <a href="https://www.census.gov/data.html" target="_blank">U.S. Census Bureau</a></div>
+
     </div>
 
-    <%= t.include("partials/_footer.html") %>
+    <script>
+      var homelessCounts = <%= JSON.stringify(json.Totals) %>
+    </script>
 
     <script src="app.js" async></script>
     <%= t.include("partials/_helloSFC.html") %>

@@ -15,6 +15,7 @@
     "chalk": "^1.0.0",
     "commonmark": "^0.24.0",
     "csv": "^0.4.2",
+    "d3": "^3.5.17",
     "exorcist": "^0.4.0",
     "google-spreadsheets": "^0.5.1",
     "googleapis": "^18.0.0",
@@ -28,6 +29,7 @@
     "resolve": "^1.1.7",
     "shelljs": "^0.6.0",
     "through2": "^2.0.0",
+    "topojson": "^3.0.0",
     "typogr": "^0.6.4"
   },
   "browser": {
