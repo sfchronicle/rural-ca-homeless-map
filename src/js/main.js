@@ -52,20 +52,20 @@ drawmap_initial(mapname,"percentChange","Total homeless");
 
 document.getElementById('all').addEventListener("click",function(){
   console.log("clicked on all");
-  drawmap(mapname,"percentChange","Total homeless");
+  drawmap(mapname,"percentChange","Total homeless","");
   document.getElementById('all').classList.add("active");
   document.getElementById('chronic').classList.remove("active");
 },false);
 
 document.getElementById('chronic').addEventListener("click",function(){
   console.log("clicked on chronic");
-  drawmap(mapname,"percentChangeChronic","Chronic homeless");
+  drawmap(mapname,"percentChangeChronic","Chronic homeless","chronic");
   document.getElementById('all').classList.remove("active");
   document.getElementById('chronic').classList.add("active");
 },false);
 
 // update map with new data
-function drawmap(active_map,year,tag) {
+function drawmap(active_map,year,tag,string) {
 
     d3.json(active_map, function(error, us) {
       if (error) throw error;
@@ -97,13 +97,13 @@ function drawmap(active_map,year,tag) {
           if (homelessCounts[Number(location)]) {
             var temp = homelessCounts[Number(location)];
             console.log(temp["percentChange"]*100);
-            if (temp["multiple"]){
-              var html_str = "<div class='name'>"+temp.id+" County</div><div class='note'>Note: Results are combined for "+temp.county+" counties.</div><div>"+tag+" in 2015: "+formatthousands(Math.round(temp["2015"]*temp["multiple"]))+"</div><div>"+tag+" in 2017: "+formatthousands(Math.round(temp["2017"]*temp["multiple"]))+"</div><div>Percent change: "+Math.round(temp[year]*100)+"%</div>";
-            } else if (temp["2015"]!= "NA") {
+            if (temp["multiple"] && (temp["2017"+string]!= "NA") && (temp["2015"+string]!= "NA")){
+              var html_str = "<div class='name'>"+temp.id+" County</div><div class='note'>Note: Results are combined for "+temp.county+" counties.</div><div>"+tag+" in 2015: "+formatthousands(Math.round(temp["2015"+string]*temp["multiple"]))+"</div><div>"+tag+" in 2017: "+formatthousands(Math.round(temp["2017"+string]*temp["multiple"]))+"</div><div>Percent change: "+Math.round(temp[year]*100)+"%</div>";
+            } else if ((temp["2017"+string]!= "NA") && (temp["2015"+string]!= "NA") ) {
               // if (temp["Source"].substring(0,4) == "http"){
               //   var html_str = "<div class='name'>"+temp.id+" County</div><div>Total homeless in 2015: "+formatthousands(temp["2015"])+"</div><div>Total homeless in 2017: "+formatthousands(temp["2017"])+"</div><div>Percent change: "+Math.round(temp["percentChange"]*100)+"%</div><div class='source'><a href='"+temp["Source"]+"'>Source <i class='fa fa-external-link' aria-hidden='true'></i></a></div>";
               // } else {
-                var html_str = "<div class='name'>"+temp.id+" County</div><div>"+tag+" in 2015: "+formatthousands(temp["2015"])+"</div><div>"+tag+" in 2017: "+formatthousands(temp["2017"])+"</div><div>Percent change: "+Math.round(temp[year]*100)+"%</div>";//"<div class='source'>Source: "+temp["Source"]+"</div>";
+                var html_str = "<div class='name'>"+temp.id+" County</div><div>"+tag+" in 2015: "+formatthousands(temp["2015"+string])+"</div><div>"+tag+" in 2017: "+formatthousands(temp["2017"+string])+"</div><div>Percent change: "+Math.round(temp[year]*100)+"%</div>";//"<div class='source'>Source: "+temp["Source"]+"</div>";
               // }
             } else {
               console.log("We have no data");
