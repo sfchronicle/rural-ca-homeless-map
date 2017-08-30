@@ -97,7 +97,7 @@ function drawmap(active_map,year,tag,string) {
           if (homelessCounts[Number(location)]) {
             var temp = homelessCounts[Number(location)];
             console.log(temp["percentChange"]*100);
-            if (temp["multiple"] && (temp["2017"+string]!= "NA") && (temp["2015"+string]!= "NA")){
+            if (temp["multiple"+string] && (temp["2017"+string]!= "NA") && (temp["2015"+string]!= "NA")){
               var html_str = "<div class='name'>"+temp.id+" County</div><div class='note'>Note: Results are combined for "+temp.county+" counties.</div><div>"+tag+" in 2015: "+formatthousands(Math.round(temp["2015"+string]*temp["multiple"]))+"</div><div>"+tag+" in 2017: "+formatthousands(Math.round(temp["2017"+string]*temp["multiple"]))+"</div><div>Percent change: "+Math.round(temp[year]*100)+"%</div>";
             } else if ((temp["2017"+string]!= "NA") && (temp["2015"+string]!= "NA") ) {
               // if (temp["Source"].substring(0,4) == "http"){
@@ -172,7 +172,7 @@ function drawmap_initial(active_map,year,tag) {
           if (homelessCounts[Number(location)]) {
             var temp = homelessCounts[Number(location)];
             console.log(temp["percentChange"]*100);
-            if (temp["multiple"]){
+            if (temp["multiple"+string]){
               var html_str = "<div class='name'>"+temp.id+" County</div><div class='note'>Note: Results are combined for "+temp.county+" counties.</div><div>"+tag+" in 2015: "+formatthousands(Math.round(temp["2015"]*temp["multiple"]))+"</div><div>"+tag+" in 2017: "+formatthousands(Math.round(temp["2017"]*temp["multiple"]))+"</div><div>Percent change: "+Math.round(temp["percentChange"]*100)+"%</div>";
             } else if (temp["2015"]!= "NA") {
               // if (temp["Source"].substring(0,4) == "http"){
