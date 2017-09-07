@@ -19,7 +19,7 @@ var path = d3.geo.path()
   .projection(null);
 
 // show tooltip
-var tooltip = d3.select("#county-map")
+var tooltip = d3.select("body")
   .append("div")
   .attr("class","tooltip")
   // .attr("id","fed-tooltip")
@@ -146,14 +146,12 @@ function drawmap_initial(active_map,year,tag,string) {
           var location = d.id;
           if (homelessCounts[Number(location)]) {
             var mig = 1-Math.abs(homelessCounts[Number(location)][year]);
-            if (mig == 1) {
+            if (homelessCounts[Number(location)][year] == 1) {
               return lightest_gray;
-            } else if(homelessCounts[Number(location)][year] >= 0) {
-              // console.log(mig);
+            } else if(homelessCounts[Number(location)][year] > 0) {
               return shadeColor2("#BC1826", mig)
             } else if (homelessCounts[Number(location)][year] < 0) {
               return shadeColor2("#265B9B", mig)
-              // return lightest_gray;
             } else {
               return lightest_gray;
             }
@@ -166,14 +164,12 @@ function drawmap_initial(active_map,year,tag,string) {
             var temp = homelessCounts[Number(location)];
             if (temp["multiple"+string]){
               var html_str = "<div class='name'>"+temp.id+" County</div><div class='note'>Note: Results are combined for "+temp.county+" counties.</div><div>"+tag+" in 2015: "+formatthousands(Math.round(temp["2015"]*temp["multiple"]))+"</div><div>"+tag+" in 2017: "+formatthousands(Math.round(temp["2017"]*temp["multiple"]))+"</div><div>Percent change: "+Math.round(temp["percentChange"]*100)+"%</div>";
-            } else if (temp["2015"]!= "NA") {
-              // if (temp["Source"].substring(0,4) == "http"){
-              //   var html_str = "<div class='name'>"+temp.id+" County</div><div>Total homeless in 2015: "+formatthousands(temp["2015"])+"</div><div>Total homeless in 2017: "+formatthousands(temp["2017"])+"</div><div>Percent change: "+Math.round(temp["percentChange"]*100)+"%</div><div class='source'><a href='"+temp["Source"]+"'>Source <i class='fa fa-external-link' aria-hidden='true'></i></a></div>";
-              // } else {
-                var html_str = "<div class='name'>"+temp.id+" County</div><div>"+tag+" in 2015: "+formatthousands(temp["2015"])+"</div><div>"+tag+" in 2017: "+formatthousands(temp["2017"])+"</div><div>Percent change: "+Math.round(temp["percentChange"]*100)+"%</div>";//"<div class='source'>Source: "+temp["Source"]+"</div>";
-              // }
+            } else if ((temp["2017"]== "NA") && (temp["2015"]== "NA")) {
+              var html_str = "<div class='name'>"+temp.id+" County</div><div>No homeless count in 2015 or 2017.</div>";
+            } else if (temp["2015"]== "NA") {
+              var html_str = "<div class='name'>"+temp.id+" County</div><div>No homeless count in 2015.</div>";
             } else {
-              var html_str = "<div class='name'>"+temp.id+" County</div><div>No homeless count available.</div>";
+              var html_str = "<div class='name'>"+temp.id+" County</div><div>"+tag+" in 2015: "+formatthousands(temp["2015"])+"</div><div>"+tag+" in 2017: "+formatthousands(temp["2017"])+"</div><div>Percent change: "+Math.round(temp["percentChange"]*100)+"%</div>";
             }
             tooltip.html(html_str);
             tooltip.style("visibility", "visible");
